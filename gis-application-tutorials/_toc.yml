@@ -5,5 +5,5 @@ format: jb-book
 root: intro
 chapters:
 - file: Healthcare-Facility-Accesibility.ipynb
-- file: Toronto Crime Analysis - Spatial_Statistics.ipynb
+- file: Toronto-Crime-Analysis.ipynb
 

@@ -1,0 +1,3173 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Spatial Statistics: Toronto Crime Analysis &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Toronto-Crime-Analysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Healthcare-Facility-Accesibility" href="Healthcare-Facility-Accesibility.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to your GIS Tutorial applications
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Healthcare-Facility-Accesibility.html">Healthcare-Facility-Accesibility</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FToronto-Crime-Analysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Toronto-Crime-Analysis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Spatial Statistics: Toronto Crime Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-a">Part A</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#are-the-crimes-clustered-is-there-central-tendency-create-a-density-map-showing-the-local-density-quadrat-or-kernel-method-may-be-used-and-describe-the-results-100-words">1. Are the crimes clustered? Is there Central Tendency? Create a density map showing the local density (quadrat or kernel method may be used) and describe the results (&lt; 100 words).</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#findings">Findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">——————————————————————————————————————————————————————————————–</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">——————————————————————————————————————————————————————————————–</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-b">Part B</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">——————————————————————————————————————————————————————————————–</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Findings</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="spatial-statistics-toronto-crime-analysis">
+<h1>Spatial Statistics: Toronto Crime Analysis<a class="headerlink" href="#spatial-statistics-toronto-crime-analysis" title="Link to this heading">#</a></h1>
+<section id="part-a">
+<h2>Part A<a class="headerlink" href="#part-a" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Are the crimes clustered? Is there Central Tendency? Create a density map showing the local
+density (quadrat or kernel method may be used) and describe the results (&lt; 100 words).</p></li>
+<li><p>Are there spatial outliers or trends in the data you’ve selected? Discuss (include any tests run,
+figures, and maps generated) (200 - 400 words).</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import all required libararies </span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pointpats</span> <span class="kn">import</span> <span class="n">centrography</span>
+<span class="kn">import</span> <span class="nn">esda</span>
+<span class="kn">import</span> <span class="nn">libpysal</span> <span class="k">as</span> <span class="nn">lib</span>
+<span class="kn">import</span> <span class="nn">contextily</span>
+<span class="kn">import</span> <span class="nn">splot</span>
+<span class="kn">from</span> <span class="nn">splot.esda</span> <span class="kn">import</span> <span class="n">plot_moran</span>
+
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">json</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;matplotlib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract Robbery crime data </span>
+<span class="c1"># uisng the robbery crime data APi from https://data.torontopolice.on.ca/datasets/TorontoPS::major-crime-indicators-1/api</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span>
+<span class="c1"># set the parameters and use a while loop to use to extract the dataset since ArcGIS rest API has a limit of loading 1000 once</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">total_records</span> <span class="o">=</span> <span class="mi">40000</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">total_records</span><span class="p">:</span>
+    <span class="n">query_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;&amp;resultOffset=</span><span class="si">{</span><span class="n">offset</span><span class="si">}</span><span class="s2">&amp;resultRecordCount=</span><span class="si">{</span><span class="n">batch_size</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">query_url</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="n">features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">])</span>
+    <span class="n">offset</span> <span class="o">+=</span> <span class="n">batch_size</span>
+
+<span class="c1"># print the feature count</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+
+<span class="c1"># Rey, S. J., &amp; Anselin, L. (2021). Point pattern analysis. Geographic Data Science, Chapter 8. Retrieved from https://geographicdata.science/book/notebooks/08_point_pattern_analysis.html</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29230
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use pandas to convert the json object feature dataset extracted to a dataframe</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">json_normalize</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>id</th>
+      <th>geometry.type</th>
+      <th>geometry.coordinates</th>
+      <th>properties.OBJECTID</th>
+      <th>properties.event_unique_id</th>
+      <th>properties.Division</th>
+      <th>properties.occurrencedate</th>
+      <th>properties.reporteddate</th>
+      <th>properties.location_type</th>
+      <th>...</th>
+      <th>properties.occurrenceday</th>
+      <th>properties.occurrencedayofyear</th>
+      <th>properties.occurrencedayofweek</th>
+      <th>properties.occurrencehour</th>
+      <th>properties.mci_category</th>
+      <th>properties.Hood_ID</th>
+      <th>properties.Neighbourhood</th>
+      <th>properties.Longitude</th>
+      <th>properties.Latitude</th>
+      <th>properties.ObjectId2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Feature</td>
+      <td>1</td>
+      <td>Point</td>
+      <td>[-79.42879592, 43.78305981]</td>
+      <td>4776</td>
+      <td>GO-20141621901</td>
+      <td>D32</td>
+      <td>1393650000000</td>
+      <td>1393650000000</td>
+      <td>Schools During Un-Supervised Activity</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>Saturday</td>
+      <td>16</td>
+      <td>Robbery</td>
+      <td>36</td>
+      <td>Newtonbrook West</td>
+      <td>-79.428796</td>
+      <td>43.783060</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Feature</td>
+      <td>2</td>
+      <td>Point</td>
+      <td>[-79.33727518, 43.68042137]</td>
+      <td>4777</td>
+      <td>GO-20141620235</td>
+      <td>D54</td>
+      <td>1393650000000</td>
+      <td>1393650000000</td>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>Saturday</td>
+      <td>6</td>
+      <td>Robbery</td>
+      <td>66</td>
+      <td>Danforth</td>
+      <td>-79.337275</td>
+      <td>43.680421</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Feature</td>
+      <td>3</td>
+      <td>Point</td>
+      <td>[-79.55947089, 43.75074185]</td>
+      <td>4781</td>
+      <td>GO-20141621683</td>
+      <td>D31</td>
+      <td>1393650000000</td>
+      <td>1393650000000</td>
+      <td>Apartment (Rooming House, Condo)</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>Saturday</td>
+      <td>15</td>
+      <td>Robbery</td>
+      <td>21</td>
+      <td>Humber Summit</td>
+      <td>-79.559471</td>
+      <td>43.750742</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Feature</td>
+      <td>4</td>
+      <td>Point</td>
+      <td>[-79.44063201, 43.72782912]</td>
+      <td>4793</td>
+      <td>GO-20141623026</td>
+      <td>D32</td>
+      <td>1393650000000</td>
+      <td>1393650000000</td>
+      <td>Open Areas (Lakes, Parks, Rivers)</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>Saturday</td>
+      <td>20</td>
+      <td>Robbery</td>
+      <td>32</td>
+      <td>Englemount-Lawrence</td>
+      <td>-79.440632</td>
+      <td>43.727829</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Feature</td>
+      <td>5</td>
+      <td>Point</td>
+      <td>[-79.25089301, 43.7544141]</td>
+      <td>4794</td>
+      <td>GO-20141623316</td>
+      <td>D43</td>
+      <td>1393650000000</td>
+      <td>1393650000000</td>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>60.0</td>
+      <td>Saturday</td>
+      <td>21</td>
+      <td>Robbery</td>
+      <td>127</td>
+      <td>Bendale</td>
+      <td>-79.250893</td>
+      <td>43.754414</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 32 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29230
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check the columns</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;type&#39;, &#39;id&#39;, &#39;geometry.type&#39;, &#39;geometry.coordinates&#39;,
+       &#39;properties.OBJECTID&#39;, &#39;properties.event_unique_id&#39;,
+       &#39;properties.Division&#39;, &#39;properties.occurrencedate&#39;,
+       &#39;properties.reporteddate&#39;, &#39;properties.location_type&#39;,
+       &#39;properties.premises_type&#39;, &#39;properties.ucr_code&#39;, &#39;properties.ucr_ext&#39;,
+       &#39;properties.offence&#39;, &#39;properties.reportedyear&#39;,
+       &#39;properties.reportedmonth&#39;, &#39;properties.reportedday&#39;,
+       &#39;properties.reporteddayofyear&#39;, &#39;properties.reporteddayofweek&#39;,
+       &#39;properties.reportedhour&#39;, &#39;properties.occurrenceyear&#39;,
+       &#39;properties.occurrencemonth&#39;, &#39;properties.occurrenceday&#39;,
+       &#39;properties.occurrencedayofyear&#39;, &#39;properties.occurrencedayofweek&#39;,
+       &#39;properties.occurrencehour&#39;, &#39;properties.mci_category&#39;,
+       &#39;properties.Hood_ID&#39;, &#39;properties.Neighbourhood&#39;,
+       &#39;properties.Longitude&#39;, &#39;properties.Latitude&#39;, &#39;properties.ObjectId2&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># llok at the year range of the robbery data extracted</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;properties.reportedyear&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;properties.reportedyear&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2022, 2014)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract all the useful columns from the dataset</span>
+<span class="n">robbery_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;properties.location_type&#39;</span><span class="p">,</span><span class="s1">&#39;geometry.coordinates&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;properties.premises_type&#39;</span><span class="p">,</span> <span class="s1">&#39;properties.offence&#39;</span><span class="p">,</span> <span class="s1">&#39;properties.reportedyear&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;properties.reportedmonth&#39;</span><span class="p">,</span> <span class="s1">&#39;properties.Latitude&#39;</span><span class="p">,</span><span class="s1">&#39;properties.Longitude&#39;</span><span class="p">]]</span>
+
+<span class="n">robbery_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>properties.location_type</th>
+      <th>geometry.coordinates</th>
+      <th>properties.premises_type</th>
+      <th>properties.offence</th>
+      <th>properties.reportedyear</th>
+      <th>properties.reportedmonth</th>
+      <th>properties.Latitude</th>
+      <th>properties.Longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Schools During Un-Supervised Activity</td>
+      <td>[-79.42879592, 43.78305981]</td>
+      <td>Educational</td>
+      <td>Robbery - Swarming</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.783060</td>
+      <td>-79.428796</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>[-79.33727518, 43.68042137]</td>
+      <td>Outside</td>
+      <td>Robbery - Mugging</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.680421</td>
+      <td>-79.337275</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apartment (Rooming House, Condo)</td>
+      <td>[-79.55947089, 43.75074185]</td>
+      <td>Apartment</td>
+      <td>Robbery - Purse Snatch</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.750742</td>
+      <td>-79.559471</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Open Areas (Lakes, Parks, Rivers)</td>
+      <td>[-79.44063201, 43.72782912]</td>
+      <td>Outside</td>
+      <td>Robbery - Mugging</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.727829</td>
+      <td>-79.440632</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>[-79.25089301, 43.7544141]</td>
+      <td>Outside</td>
+      <td>Robbery - Purse Snatch</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.754414</td>
+      <td>-79.250893</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># standardize the columns name</span>
+<span class="n">robbery_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;properties.location_type&#39;</span><span class="p">:</span><span class="s1">&#39;location_type&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;geometry.coordinates&#39;</span><span class="p">:</span><span class="s1">&#39;coordinates&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;properties.premises_type&#39;</span><span class="p">:</span><span class="s1">&#39;premises_type&#39;</span><span class="p">,</span> <span class="s1">&#39;properties.offence&#39;</span><span class="p">:</span><span class="s1">&#39;offence&#39;</span><span class="p">,</span> 
+                          <span class="s1">&#39;properties.reportedyear&#39;</span><span class="p">:</span><span class="s1">&#39;reportedyear&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;properties.reportedmonth&#39;</span><span class="p">:</span><span class="s1">&#39;reportedmonth&#39;</span><span class="p">,</span> <span class="s1">&#39;properties.Latitude&#39;</span><span class="p">:</span><span class="s1">&#39;Latitude&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;properties.Longitude&#39;</span><span class="p">:</span><span class="s1">&#39;Longitude&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">robbery_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>location_type</th>
+      <th>coordinates</th>
+      <th>premises_type</th>
+      <th>offence</th>
+      <th>reportedyear</th>
+      <th>reportedmonth</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Schools During Un-Supervised Activity</td>
+      <td>[-79.42879592, 43.78305981]</td>
+      <td>Educational</td>
+      <td>Robbery - Swarming</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.783060</td>
+      <td>-79.428796</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>[-79.33727518, 43.68042137]</td>
+      <td>Outside</td>
+      <td>Robbery - Mugging</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.680421</td>
+      <td>-79.337275</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Apartment (Rooming House, Condo)</td>
+      <td>[-79.55947089, 43.75074185]</td>
+      <td>Apartment</td>
+      <td>Robbery - Purse Snatch</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.750742</td>
+      <td>-79.559471</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Open Areas (Lakes, Parks, Rivers)</td>
+      <td>[-79.44063201, 43.72782912]</td>
+      <td>Outside</td>
+      <td>Robbery - Mugging</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.727829</td>
+      <td>-79.440632</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>[-79.25089301, 43.7544141]</td>
+      <td>Outside</td>
+      <td>Robbery - Purse Snatch</td>
+      <td>2014</td>
+      <td>March</td>
+      <td>43.754414</td>
+      <td>-79.250893</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert the dataframe to a geodataframe</span>
+<span class="c1"># Convert latitude and longitude to Point geometry</span>
+<span class="n">robbery_gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">robbery_df</span><span class="p">,</span>
+                               <span class="n">geometry</span><span class="o">=</span><span class="n">gpd</span><span class="o">.</span><span class="n">points_from_xy</span><span class="p">(</span><span class="n">robbery_df</span><span class="o">.</span><span class="n">Longitude</span><span class="p">,</span> <span class="n">robbery_df</span><span class="o">.</span><span class="n">Latitude</span><span class="p">))</span>
+
+<span class="c1"># Set coordinate reference system (CRS)</span>
+<span class="n">robbery_gdf</span><span class="o">.</span><span class="n">crs</span> <span class="o">=</span> <span class="s1">&#39;epsg:4326&#39;</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">robbery_gdf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>geopandas.geodataframe.GeoDataFrame
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># select all robbery crime data for 2016 that has coordinates</span>
+<span class="n">robbery_gdf2</span> <span class="o">=</span> <span class="n">robbery_gdf</span><span class="p">[(</span><span class="n">robbery_gdf</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">robbery_gdf</span><span class="p">[</span><span class="s1">&#39;reportedyear&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2016</span><span class="p">)]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3705
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check the months the data where reported for</span>
+<span class="c1"># month data were reported</span>
+<span class="n">robbery_gdf2</span><span class="p">[</span><span class="s2">&quot;reportedmonth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>July         360
+June         332
+November     331
+October      329
+August       325
+April        313
+May          311
+February     295
+September    294
+December     275
+March        274
+January      266
+Name: reportedmonth, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check the months the data where reported for</span>
+<span class="c1"># month data were reported</span>
+<span class="n">robbery_gdf2</span><span class="p">[</span><span class="s2">&quot;reportedmonth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ba84e3a8f9dafd429cde3e547c10fbc021c28b9de42d7f4af2ca5137bed6cdef.png" src="_images/ba84e3a8f9dafd429cde3e547c10fbc021c28b9de42d7f4af2ca5137bed6cdef.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="c1"># ax.set_aspect(&#39;equal&#39;)</span>
+<span class="n">robbery_gdf2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/53cd1ad08ff47f2971e1c015963cb907ecf32b70c66cf52f4048f5433cbe7d29.png" src="_images/53cd1ad08ff47f2971e1c015963cb907ecf32b70c66cf52f4048f5433cbe7d29.png" />
+</div>
+</div>
+<p>In Toronto, robbery crimes were recorded in 2016 with a total of 3705 incidents. The month with the highest number of robberies was July, accounting for 360 incidents, while the least amount of robberies occurred in January with only 266 incidents.</p>
+<section id="are-the-crimes-clustered-is-there-central-tendency-create-a-density-map-showing-the-local-density-quadrat-or-kernel-method-may-be-used-and-describe-the-results-100-words">
+<h3>1. Are the crimes clustered? Is there Central Tendency? Create a density map showing the local density (quadrat or kernel method may be used) and describe the results (&lt; 100 words).<a class="headerlink" href="#are-the-crimes-clustered-is-there-central-tendency-create-a-density-map-showing-the-local-density-quadrat-or-kernel-method-may-be-used-and-describe-the-results-100-words" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find the mean and median center of the spatial dataset to measure the central tendency</span>
+<span class="n">mean_center</span> <span class="o">=</span> <span class="n">centrography</span><span class="o">.</span><span class="n">mean_center</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">[[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span><span class="s2">&quot;Latitude&quot;</span><span class="p">]])</span>
+<span class="n">med_center</span> <span class="o">=</span> <span class="n">centrography</span><span class="o">.</span><span class="n">euclidean_median</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">[[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span><span class="s2">&quot;Latitude&quot;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean center is : </span><span class="si">{</span><span class="n">mean_center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The median center is: </span><span class="si">{</span><span class="n">med_center</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean center is : [-79.39976751  43.71014919]
+The median center is: [-79.40044105  43.69140378]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dispaly the mean and median value on a plot</span>
+<span class="c1"># Generate scatter plot</span>
+<span class="n">joint_axes</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span>
+    <span class="n">robbery_gdf2</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">9</span>
+<span class="p">)</span>
+<span class="c1"># Add mean point and marginal lines</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_joint</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">mean_center</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean Center&quot;</span>
+<span class="p">)</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_marg_x</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mean_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_marg_y</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">mean_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add median point and marginal lines</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_joint</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">med_center</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;limegreen&quot;</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Median Center&quot;</span>
+<span class="p">)</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_marg_x</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">med_center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;limegreen&quot;</span><span class="p">)</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_marg_y</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">med_center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;limegreen&quot;</span><span class="p">)</span>
+
+<span class="c1">#Legend</span>
+<span class="n">joint_axes</span><span class="o">.</span><span class="n">ax_joint</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+
+<span class="c1"># Clean axes</span>
+<span class="c1"># joint_axes.ax_joint.set_axis_off()</span>
+<span class="c1"># Display</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/abe26953846a05f2dc5226dd81df145959e25a978472b6396824fca06d69b5ee.png" src="_images/abe26953846a05f2dc5226dd81df145959e25a978472b6396824fca06d69b5ee.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the kernel density map</span>
+<span class="c1"># Set up the figure and axes</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Generate and add the KDE plot to the first axis</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">robbery_gdf2</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+    <span class="n">n_levels</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span>
+    <span class="n">shade</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">levels</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.55</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlOrRd&quot;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Generate and add the scatter plot to the second axis</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">robbery_gdf2</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Set titles for the plots</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;KDE Plot&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;location plot&quot;</span><span class="p">)</span>
+
+
+
+<span class="c1"># Display the plots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/30024ee14ae7e84fb73a99d5800ab3c0f368ead828fc1e6ef74ed3546037bcba.png" src="_images/30024ee14ae7e84fb73a99d5800ab3c0f368ead828fc1e6ef74ed3546037bcba.png" />
+</div>
+</div>
+<section id="findings">
+<h4>Findings<a class="headerlink" href="#findings" title="Link to this heading">#</a></h4>
+<p>The kernel density maps of the crime occurrence in Toronto reveal that the crime density is higher in the southern part of the city, while there is little to no robbery crime incidence in central Toronto. The central tendency chart further illustrates that the mean and median of the data distribution are around the southern part of the study area, indicating a high concentration of robbery crime incidents in that region. These results suggest that the southern part of Toronto is more prone to robbery crimes, while the central part of the city is relatively safer. Such insights can help law enforcement agencies and policymakers to target their crime prevention efforts more effectively, such as by increasing police patrols and improving the lighting and security measures in high-risk areas.</p>
+<section id="id1">
+<h5>——————————————————————————————————————————————————————————————–<a class="headerlink" href="#id1" title="Link to this heading">#</a></h5>
+<p>Are there spatial outliers or trends in the data you’ve selected? Discuss (include any tests run,
+figures, and maps generated) (200 - 400 words)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#load dataset</span>
+<span class="n">robbery_gdf2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>location_type</th>
+      <th>coordinates</th>
+      <th>premises_type</th>
+      <th>offence</th>
+      <th>reportedyear</th>
+      <th>reportedmonth</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7040</th>
+      <td>Schools During Un-Supervised Activity</td>
+      <td>[-79.48210041, 43.68063272]</td>
+      <td>Educational</td>
+      <td>Robbery - Mugging</td>
+      <td>2016</td>
+      <td>February</td>
+      <td>43.680633</td>
+      <td>-79.482100</td>
+      <td>POINT (-79.48210 43.68063)</td>
+    </tr>
+    <tr>
+      <th>7101</th>
+      <td>Bank And Other Financial Institutions (Money M...</td>
+      <td>[-79.14087514, 43.78965739]</td>
+      <td>Commercial</td>
+      <td>Robbery - Financial Institute</td>
+      <td>2016</td>
+      <td>March</td>
+      <td>43.789657</td>
+      <td>-79.140875</td>
+      <td>POINT (-79.14088 43.78966)</td>
+    </tr>
+    <tr>
+      <th>7104</th>
+      <td>Commercial Dwelling Unit (Hotel, Motel, B &amp; B,...</td>
+      <td>[-79.37592197, 43.64958517]</td>
+      <td>Commercial</td>
+      <td>Robbery With Weapon</td>
+      <td>2016</td>
+      <td>January</td>
+      <td>43.649585</td>
+      <td>-79.375922</td>
+      <td>POINT (-79.37592 43.64959)</td>
+    </tr>
+    <tr>
+      <th>7105</th>
+      <td>Gas Station (Self, Full, Attached Convenience)</td>
+      <td>[-79.18877904, 43.76850527]</td>
+      <td>Commercial</td>
+      <td>Robbery - Business</td>
+      <td>2016</td>
+      <td>February</td>
+      <td>43.768505</td>
+      <td>-79.188779</td>
+      <td>POINT (-79.18878 43.76851)</td>
+    </tr>
+    <tr>
+      <th>7106</th>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>[-79.59190438, 43.74533099]</td>
+      <td>Outside</td>
+      <td>Robbery With Weapon</td>
+      <td>2016</td>
+      <td>January</td>
+      <td>43.745331</td>
+      <td>-79.591904</td>
+      <td>POINT (-79.59190 43.74533)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize the data using scatter plot to visually see outliers</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="c1"># ax.set_aspect(&#39;equal&#39;)</span>
+<span class="n">robbery_gdf2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0041194f4bc8dcc165413d69d262565619aaae3dd83f0787a2ac4e6e34125940.png" src="_images/0041194f4bc8dcc165413d69d262565619aaae3dd83f0787a2ac4e6e34125940.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a spatial weights matrix based on the data&#39;s spatial coordinates</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">KNN</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Calculate Moran&#39;s I for the spatial coordinates</span>
+<span class="n">moran</span> <span class="o">=</span> <span class="n">esda</span><span class="o">.</span><span class="n">Moran</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span><span class="n">w</span><span class="p">)</span>
+
+<span class="c1"># Print the Moran&#39;s I statistic and p-value</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moran&#39;s I: </span><span class="si">{</span><span class="n">moran</span><span class="o">.</span><span class="n">I</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p-value: </span><span class="si">{</span><span class="n">moran</span><span class="o">.</span><span class="n">p_sim</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moran&#39;s I: 0.96
+p-value: 0.001
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#moran I plot to identify outliers</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">splot</span><span class="o">.</span><span class="n">esda</span><span class="o">.</span><span class="n">moran_scatterplot</span><span class="p">(</span><span class="n">moran</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Latitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Spatial Lag of Latitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/08b621cfae815d1cdea70a78b23d995c28fa420a3ad2a75911628b78d1fd3c96.png" src="_images/08b621cfae815d1cdea70a78b23d995c28fa420a3ad2a75911628b78d1fd3c96.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">moran_2</span> <span class="o">=</span> <span class="n">esda</span><span class="o">.</span><span class="n">moran</span><span class="o">.</span><span class="n">Moran_Local</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span> <span class="n">w</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">moran_2</span><span class="o">.</span><span class="n">q</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3 1 3 ... 3 3 3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can distinguish the specific type of local spatial association </span>
+<span class="c1"># reflected in the four quadrants of the Moran Scatterplot above:</span>
+<span class="n">sig</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">moran_2</span><span class="o">.</span><span class="n">p_sim</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">coldspot</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">sig</span> <span class="o">*</span> <span class="n">moran_2</span><span class="o">.</span><span class="n">q</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">doughnut</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">sig</span> <span class="o">*</span> <span class="n">moran_2</span><span class="o">.</span><span class="n">q</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hotspot</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">sig</span> <span class="o">*</span> <span class="n">moran_2</span><span class="o">.</span><span class="n">q</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">diamond</span> <span class="o">=</span>  <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">sig</span> <span class="o">*</span> <span class="n">moran_2</span><span class="o">.</span><span class="n">q</span><span class="o">==</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">spots</span> <span class="o">=</span> <span class="n">hotspot</span> <span class="o">+</span> <span class="n">coldspot</span> <span class="o">+</span> <span class="n">doughnut</span> <span class="o">+</span> <span class="n">diamond</span>
+<span class="n">spots</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3, 1, 3, ..., 3, 3, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spot_labels</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;0 ns&#39;</span><span class="p">,</span> <span class="s1">&#39;1 cold spot&#39;</span><span class="p">,</span> <span class="s1">&#39;3 cold spot&#39;</span><span class="p">,</span> <span class="s1">&#39;4 hot spot&#39;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">spot_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">spots</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="n">hmap</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">([</span> <span class="s1">&#39;lightgrey&#39;</span><span class="p">,</span> <span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">])</span>
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">robbery_gdf2</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">cl</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;cl&#39;</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> \
+        <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">hmap</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> \
+        <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/db2ab428f4e509d56285ad81c7422ed40e39025188dff55861585692263409d8.png" src="_images/db2ab428f4e509d56285ad81c7422ed40e39025188dff55861585692263409d8.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h4>Findings<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>The Moran’s I test is commonly used in spatial analysis to detect the presence of spatial autocorrelation, or clustering, in the data. In the case of the robbery dataset, the Moran’s I test is used to identify spatial outliers, which are areas that are significantly different from their surrounding areas in terms of the number of reported robberies.</p>
+<p>The result of the Moran’s I test for the robbery dataset shows a high positive correlation, indicating a significant level of spatial clustering in the data. This result suggests that areas with a high number of reported robberies are likely to be surrounded by other areas with a high number of reported robberies.</p>
+<p>The Moran’s I test also identifies spatial outliers, which are areas that deviate from the spatial pattern of the data. In the case of the robbery dataset, the test identifies areas with a significantly higher or lower number of reported robberies than would be expected based on the surrounding areas.</p>
+<p>In the resulting map, the areas identified as spatial outliers are highlighted in blue (cold spots) or red (hot spots), indicating areas with a significantly lower or higher number of reported robberies, respectively. These areas could be further investigated to identify potential causes for the deviation in the spatial pattern of the data. For example, areas with a high number of reported robberies may have a higher concentration of businesses or other factors that make them more vulnerable to robbery. Conversely, areas with a lower number of reported robberies may have more security measures or fewer potential targets for robbery.</p>
+<section id="id3">
+<h5>——————————————————————————————————————————————————————————————–<a class="headerlink" href="#id3" title="Link to this heading">#</a></h5>
+</section>
+</section>
+</section>
+</section>
+<section id="part-b">
+<h2>Part B<a class="headerlink" href="#part-b" title="Link to this heading">#</a></h2>
+<ol class="arabic simple" start="3">
+<li><p>What is the probability that this spatial pattern could have arisen by chance (Moran’s I)?
+(Include graphs and or text to support your answer.)</p></li>
+<li><p>What are some other factors that might influence the location of these types of crimes? Use
+plots or graphs as necessary to support your response. (200 - 400 words) You might explore
+data from the City of Toronto, <a class="reference external" href="https://www.toronto.ca/city-government/data-researchmaps/">https://www.toronto.ca/city-government/data-researchmaps/</a>
+open-data/, or datasets from other providers, e.g.: <a class="reference external" href="https://open.canada.ca/en">https://open.canada.ca/en</a></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the dataset again</span>
+<span class="n">robbery_gdf2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>location_type</th>
+      <th>coordinates</th>
+      <th>premises_type</th>
+      <th>offence</th>
+      <th>reportedyear</th>
+      <th>reportedmonth</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7040</th>
+      <td>Schools During Un-Supervised Activity</td>
+      <td>[-79.48210041, 43.68063272]</td>
+      <td>Educational</td>
+      <td>Robbery - Mugging</td>
+      <td>2016</td>
+      <td>February</td>
+      <td>43.680633</td>
+      <td>-79.482100</td>
+      <td>POINT (-79.48210 43.68063)</td>
+    </tr>
+    <tr>
+      <th>7101</th>
+      <td>Bank And Other Financial Institutions (Money M...</td>
+      <td>[-79.14087514, 43.78965739]</td>
+      <td>Commercial</td>
+      <td>Robbery - Financial Institute</td>
+      <td>2016</td>
+      <td>March</td>
+      <td>43.789657</td>
+      <td>-79.140875</td>
+      <td>POINT (-79.14088 43.78966)</td>
+    </tr>
+    <tr>
+      <th>7104</th>
+      <td>Commercial Dwelling Unit (Hotel, Motel, B &amp; B,...</td>
+      <td>[-79.37592197, 43.64958517]</td>
+      <td>Commercial</td>
+      <td>Robbery With Weapon</td>
+      <td>2016</td>
+      <td>January</td>
+      <td>43.649585</td>
+      <td>-79.375922</td>
+      <td>POINT (-79.37592 43.64959)</td>
+    </tr>
+    <tr>
+      <th>7105</th>
+      <td>Gas Station (Self, Full, Attached Convenience)</td>
+      <td>[-79.18877904, 43.76850527]</td>
+      <td>Commercial</td>
+      <td>Robbery - Business</td>
+      <td>2016</td>
+      <td>February</td>
+      <td>43.768505</td>
+      <td>-79.188779</td>
+      <td>POINT (-79.18878 43.76851)</td>
+    </tr>
+    <tr>
+      <th>7106</th>
+      <td>Streets, Roads, Highways (Bicycle Path, Privat...</td>
+      <td>[-79.59190438, 43.74533099]</td>
+      <td>Outside</td>
+      <td>Robbery With Weapon</td>
+      <td>2016</td>
+      <td>January</td>
+      <td>43.745331</td>
+      <td>-79.591904</td>
+      <td>POINT (-79.59190 43.74533)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a spatial weights matrix based on the data&#39;s spatial coordinates</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">KNN</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Calculate Moran&#39;s I for the spatial coordinates</span>
+<span class="n">moran</span> <span class="o">=</span> <span class="n">esda</span><span class="o">.</span><span class="n">Moran</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">],</span><span class="n">w</span><span class="p">)</span>
+
+<span class="c1"># Print the Moran&#39;s I statistic and p-value</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moran&#39;s I: </span><span class="si">{</span><span class="n">moran</span><span class="o">.</span><span class="n">I</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;p-value: </span><span class="si">{</span><span class="n">moran</span><span class="o">.</span><span class="n">p_sim</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Moran&#39;s I: 0.96
+p-value: 0.001
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_moran</span><span class="p">(</span><span class="n">moran</span><span class="p">,</span> <span class="n">zstandard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5744c0623ede3752cdb615541e292bba43a4a732dfbebbca44cae66e6b8bf34c.png" src="_images/5744c0623ede3752cdb615541e292bba43a4a732dfbebbca44cae66e6b8bf34c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#build a moran I sccatter plot to show spatial lag of the dataset using</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">splot</span><span class="o">.</span><span class="n">esda</span><span class="o">.</span><span class="n">moran_scatterplot</span><span class="p">(</span><span class="n">moran</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Latitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Spatial Lag of Latitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/08b621cfae815d1cdea70a78b23d995c28fa420a3ad2a75911628b78d1fd3c96.png" src="_images/08b621cfae815d1cdea70a78b23d995c28fa420a3ad2a75911628b78d1fd3c96.png" />
+</div>
+</div>
+<section id="id4">
+<h3>Findings<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>The Toronto robbery crime data exhibit a high level of spatial autocorrelation with a Moran’s I value of 0.96 and a statistically significant p-value of 0.001. The density and scatter plot suggest the presence of some minor outliers, which may have influenced the spatial patterns. These results indicate that there is a strong spatial relationship between robbery crime incidents, with nearby locations exhibiting similar crime rates.</p>
+<section id="id5">
+<h4>——————————————————————————————————————————————————————————————–<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>What are some other factors that might influence the location of these types of crimes? Use plots or graphs as necessary to support your response. (200 - 400 words) You might explore data from the City of Toronto, <a class="reference external" href="https://www.toronto.ca/city-government/data-researchmaps/">https://www.toronto.ca/city-government/data-researchmaps/</a> open-data/, or datasets from other providers, e.g.: <a class="reference external" href="https://open.canada.ca/en">https://open.canada.ca/en</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># url to the csv file of the toronto neighbourhood profile dataset https://open.toronto.ca/dataset/neighbourhood-profiles/</span>
+<span class="n">csv_url</span> <span class="o">=</span> <span class="s2">&quot;https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/6e19a90f-971c-46b3-</span><span class="se">\</span>
+<span class="s2">852c-0c48c436d1fc/resource/f07fe8f0-fa24-4d68-8cb4-326e280b0b05/download/neighbourhood-</span><span class="se">\</span>
+<span class="s2">profiles-2016-140-model.csv&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#use pandas to load the data</span>
+<span class="n">neighborhood_profile</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_url</span><span class="p">)</span>
+<span class="n">neighborhood_profile</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>_id</th>
+      <th>Category</th>
+      <th>Topic</th>
+      <th>Data Source</th>
+      <th>Characteristic</th>
+      <th>City of Toronto</th>
+      <th>Agincourt North</th>
+      <th>Agincourt South-Malvern West</th>
+      <th>Alderwood</th>
+      <th>Annex</th>
+      <th>...</th>
+      <th>Willowdale West</th>
+      <th>Willowridge-Martingrove-Richview</th>
+      <th>Woburn</th>
+      <th>Woodbine Corridor</th>
+      <th>Woodbine-Lumsden</th>
+      <th>Wychwood</th>
+      <th>Yonge-Eglinton</th>
+      <th>Yonge-St.Clair</th>
+      <th>York University Heights</th>
+      <th>Yorkdale-Glen Park</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Neighbourhood Information</td>
+      <td>Neighbourhood Information</td>
+      <td>City of Toronto</td>
+      <td>Neighbourhood Number</td>
+      <td>NaN</td>
+      <td>129</td>
+      <td>128</td>
+      <td>20</td>
+      <td>95</td>
+      <td>...</td>
+      <td>37</td>
+      <td>7</td>
+      <td>137</td>
+      <td>64</td>
+      <td>60</td>
+      <td>94</td>
+      <td>100</td>
+      <td>97</td>
+      <td>27</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Neighbourhood Information</td>
+      <td>Neighbourhood Information</td>
+      <td>City of Toronto</td>
+      <td>TSNS2020 Designation</td>
+      <td>NaN</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>...</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>NIA</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>No Designation</td>
+      <td>NIA</td>
+      <td>Emerging Neighbourhood</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Population</td>
+      <td>Population and dwellings</td>
+      <td>Census Profile 98-316-X2016001</td>
+      <td>Population, 2016</td>
+      <td>2,731,571</td>
+      <td>29,113</td>
+      <td>23,757</td>
+      <td>12,054</td>
+      <td>30,526</td>
+      <td>...</td>
+      <td>16,936</td>
+      <td>22,156</td>
+      <td>53,485</td>
+      <td>12,541</td>
+      <td>7,865</td>
+      <td>14,349</td>
+      <td>11,817</td>
+      <td>12,528</td>
+      <td>27,593</td>
+      <td>14,804</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Population</td>
+      <td>Population and dwellings</td>
+      <td>Census Profile 98-316-X2016001</td>
+      <td>Population, 2011</td>
+      <td>2,615,060</td>
+      <td>30,279</td>
+      <td>21,988</td>
+      <td>11,904</td>
+      <td>29,177</td>
+      <td>...</td>
+      <td>15,004</td>
+      <td>21,343</td>
+      <td>53,350</td>
+      <td>11,703</td>
+      <td>7,826</td>
+      <td>13,986</td>
+      <td>10,578</td>
+      <td>11,652</td>
+      <td>27,713</td>
+      <td>14,687</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Population</td>
+      <td>Population and dwellings</td>
+      <td>Census Profile 98-316-X2016001</td>
+      <td>Population Change 2011-2016</td>
+      <td>4.50%</td>
+      <td>-3.90%</td>
+      <td>8.00%</td>
+      <td>1.30%</td>
+      <td>4.60%</td>
+      <td>...</td>
+      <td>12.90%</td>
+      <td>3.80%</td>
+      <td>0.30%</td>
+      <td>7.20%</td>
+      <td>0.50%</td>
+      <td>2.60%</td>
+      <td>11.70%</td>
+      <td>7.50%</td>
+      <td>-0.40%</td>
+      <td>0.80%</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 146 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># write code that willl bw used to cleanded the socail ecnomic dataset</span>
+<span class="n">new</span> <span class="o">=</span> <span class="n">neighborhood_profile</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">new</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">4</span><span class="p">:,:]</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;level_0&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># Reset the index </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>4</th>
+      <th>Characteristic</th>
+      <th>Neighbourhood Number</th>
+      <th>TSNS2020 Designation</th>
+      <th>Population, 2016</th>
+      <th>Population, 2011</th>
+      <th>Population Change 2011-2016</th>
+      <th>Total private dwellings</th>
+      <th>Private dwellings occupied by usual residents</th>
+      <th>Population density per square kilometre</th>
+      <th>Land area in square kilometres</th>
+      <th>...</th>
+      <th>Intraprovincial migrants</th>
+      <th>Interprovincial migrants</th>
+      <th>External migrants</th>
+      <th>Total - Mobility status 5 years ago - 25% sample data</th>
+      <th>Non-movers</th>
+      <th>Movers</th>
+      <th>Non-migrants</th>
+      <th>Migrants</th>
+      <th>Interprovincial migrants</th>
+      <th>External migrants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>City of Toronto</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2,731,571</td>
+      <td>2,615,060</td>
+      <td>4.50%</td>
+      <td>1,179,057</td>
+      <td>1,112,929</td>
+      <td>4,334</td>
+      <td>630.2</td>
+      <td>...</td>
+      <td>49,990</td>
+      <td>15,780</td>
+      <td>59,945</td>
+      <td>2,556,120</td>
+      <td>1,516,110</td>
+      <td>1,040,015</td>
+      <td>639,060</td>
+      <td>400,950</td>
+      <td>42,985</td>
+      <td>216,835</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Agincourt North</td>
+      <td>129</td>
+      <td>No Designation</td>
+      <td>29,113</td>
+      <td>30,279</td>
+      <td>-3.90%</td>
+      <td>9,371</td>
+      <td>9,120</td>
+      <td>3,929</td>
+      <td>7.41</td>
+      <td>...</td>
+      <td>275</td>
+      <td>75</td>
+      <td>605</td>
+      <td>27,490</td>
+      <td>18,865</td>
+      <td>8,610</td>
+      <td>5,445</td>
+      <td>3,170</td>
+      <td>135</td>
+      <td>2,280</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Agincourt South-Malvern West</td>
+      <td>128</td>
+      <td>No Designation</td>
+      <td>23,757</td>
+      <td>21,988</td>
+      <td>8.00%</td>
+      <td>8,535</td>
+      <td>8,136</td>
+      <td>3,034</td>
+      <td>7.83</td>
+      <td>...</td>
+      <td>320</td>
+      <td>90</td>
+      <td>490</td>
+      <td>22,325</td>
+      <td>13,565</td>
+      <td>8,775</td>
+      <td>5,610</td>
+      <td>3,145</td>
+      <td>220</td>
+      <td>2,170</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alderwood</td>
+      <td>20</td>
+      <td>No Designation</td>
+      <td>12,054</td>
+      <td>11,904</td>
+      <td>1.30%</td>
+      <td>4,732</td>
+      <td>4,616</td>
+      <td>2,435</td>
+      <td>4.95</td>
+      <td>...</td>
+      <td>220</td>
+      <td>40</td>
+      <td>70</td>
+      <td>11,370</td>
+      <td>8,235</td>
+      <td>3,130</td>
+      <td>2,200</td>
+      <td>925</td>
+      <td>70</td>
+      <td>245</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Annex</td>
+      <td>95</td>
+      <td>No Designation</td>
+      <td>30,526</td>
+      <td>29,177</td>
+      <td>4.60%</td>
+      <td>18,109</td>
+      <td>15,934</td>
+      <td>10,863</td>
+      <td>2.81</td>
+      <td>...</td>
+      <td>900</td>
+      <td>385</td>
+      <td>835</td>
+      <td>27,715</td>
+      <td>12,980</td>
+      <td>14,735</td>
+      <td>8,340</td>
+      <td>6,390</td>
+      <td>1,310</td>
+      <td>2,460</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 2384 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extrat the needed socio economic and demographic data</span>
+<span class="n">demographic_data</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[[</span><span class="s1">&#39;Characteristic&#39;</span><span class="p">,</span> <span class="s1">&#39;Population, 2016&#39;</span><span class="p">,</span> <span class="s1">&#39;Youth (15-24 years)&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Total income: Average amount ($)&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Unemployment rate&#39;</span><span class="p">,</span><span class="s1">&#39;Unemployment rate (Males)&#39;</span><span class="p">,</span><span class="s1">&#39;Working Age (25-54 years)&#39;</span>
+                       <span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
+<span class="n">demographic_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>4</th>
+      <th>Characteristic</th>
+      <th>Population, 2016</th>
+      <th>Youth (15-24 years)</th>
+      <th>Total income: Average amount ($)</th>
+      <th>Unemployment rate</th>
+      <th>Unemployment rate (Males)</th>
+      <th>Working Age (25-54 years)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>City of Toronto</td>
+      <td>2,731,571</td>
+      <td>340,270</td>
+      <td>52,268</td>
+      <td>8.2</td>
+      <td>8</td>
+      <td>1,229,555</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Agincourt North</td>
+      <td>29,113</td>
+      <td>3,705</td>
+      <td>30,414</td>
+      <td>9.8</td>
+      <td>9</td>
+      <td>11,305</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Agincourt South-Malvern West</td>
+      <td>23,757</td>
+      <td>3,360</td>
+      <td>31,825</td>
+      <td>9.8</td>
+      <td>8.8</td>
+      <td>9,965</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alderwood</td>
+      <td>12,054</td>
+      <td>1,235</td>
+      <td>47,709</td>
+      <td>6.1</td>
+      <td>5.4</td>
+      <td>5,220</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Annex</td>
+      <td>30,526</td>
+      <td>3,750</td>
+      <td>112,766</td>
+      <td>6.7</td>
+      <td>6.9</td>
+      <td>15,040</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#load Toronto neighborhood boundary</span>
+<span class="c1"># https://edu.hub.arcgis.com/datasets/edu::toronto-neighbourhoods-1/explore?location=43.717982%2C-79.377254%2C11.64</span>
+<span class="n">boundary_url</span> <span class="o">=</span> <span class="s1">&#39;https://opendata.arcgis.com/api/v3/datasets/af06159170914808983959df6163fc86_0/downloads/data?format=geojson&amp;spatialRefId=4326&amp;where=1%3D1&#39;</span>
+<span class="n">toronto</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">boundary_url</span><span class="p">)</span>
+
+<span class="c1"># Display the resulting GeoDataFrame</span>
+<span class="n">toronto</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/21c8050f0a251b1d01774f1620c569e4bfe418459ce4dfac8925fc1945baba53.png" src="_images/21c8050f0a251b1d01774f1620c569e4bfe418459ce4dfac8925fc1945baba53.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">toronto</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add a unique id that willl be usd to join the two data</span>
+<span class="n">toronto</span> <span class="o">=</span> <span class="n">toronto</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span><span class="s1">&#39;Neighbourhood&#39;</span><span class="p">)</span>
+<span class="n">toronto</span><span class="p">[</span><span class="s1">&#39;id_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">141</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">toronto</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>Neighbourhood</th>
+      <th>Total_Area</th>
+      <th>Total_Population</th>
+      <th>Pop_Males</th>
+      <th>Pop_Females</th>
+      <th>Pop0_4years</th>
+      <th>Pop5_9years</th>
+      <th>Pop10_14years</th>
+      <th>Pop15_19years</th>
+      <th>...</th>
+      <th>Language_Korean</th>
+      <th>Language_Persian</th>
+      <th>Language_Portuguese</th>
+      <th>Language_Russian</th>
+      <th>Language_Spanish</th>
+      <th>Language_Tagalog</th>
+      <th>Language_Tamil</th>
+      <th>Language_Urdu</th>
+      <th>geometry</th>
+      <th>id_new</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>79</th>
+      <td>80</td>
+      <td>Agincourt North</td>
+      <td>7.3</td>
+      <td>30280</td>
+      <td>14445</td>
+      <td>15845</td>
+      <td>1320</td>
+      <td>1345</td>
+      <td>1560</td>
+      <td>2000</td>
+      <td>...</td>
+      <td>55</td>
+      <td>140</td>
+      <td>70</td>
+      <td>20</td>
+      <td>145</td>
+      <td>780</td>
+      <td>2845</td>
+      <td>350</td>
+      <td>POLYGON ((-79.24213 43.80247, -79.24319 43.802...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>81</td>
+      <td>Agincourt South-Malvern West</td>
+      <td>7.9</td>
+      <td>21990</td>
+      <td>10630</td>
+      <td>11350</td>
+      <td>1080</td>
+      <td>930</td>
+      <td>1150</td>
+      <td>1480</td>
+      <td>...</td>
+      <td>70</td>
+      <td>170</td>
+      <td>60</td>
+      <td>25</td>
+      <td>130</td>
+      <td>500</td>
+      <td>1035</td>
+      <td>395</td>
+      <td>POLYGON ((-79.25498 43.78122, -79.25797 43.780...</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>87</td>
+      <td>Alderwood</td>
+      <td>5.0</td>
+      <td>11900</td>
+      <td>5765</td>
+      <td>6130</td>
+      <td>610</td>
+      <td>495</td>
+      <td>555</td>
+      <td>650</td>
+      <td>...</td>
+      <td>40</td>
+      <td>20</td>
+      <td>425</td>
+      <td>190</td>
+      <td>160</td>
+      <td>260</td>
+      <td>15</td>
+      <td>10</td>
+      <td>POLYGON ((-79.54866 43.59022, -79.54876 43.590...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>57</td>
+      <td>Annex</td>
+      <td>2.8</td>
+      <td>29180</td>
+      <td>13745</td>
+      <td>15415</td>
+      <td>865</td>
+      <td>695</td>
+      <td>635</td>
+      <td>870</td>
+      <td>...</td>
+      <td>375</td>
+      <td>270</td>
+      <td>355</td>
+      <td>315</td>
+      <td>555</td>
+      <td>135</td>
+      <td>30</td>
+      <td>90</td>
+      <td>POLYGON ((-79.39414 43.66872, -79.39588 43.668...</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>85</td>
+      <td>Banbury-Don Mills</td>
+      <td>10.0</td>
+      <td>26910</td>
+      <td>12485</td>
+      <td>14430</td>
+      <td>1180</td>
+      <td>1205</td>
+      <td>1325</td>
+      <td>1440</td>
+      <td>...</td>
+      <td>510</td>
+      <td>875</td>
+      <td>110</td>
+      <td>305</td>
+      <td>360</td>
+      <td>515</td>
+      <td>145</td>
+      <td>220</td>
+      <td>POLYGON ((-79.33055 43.73979, -79.33044 43.739...</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 41 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">toronto</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add a unique id that willl be usd to join the two data</span>
+<span class="n">data_ngbhd</span> <span class="o">=</span> <span class="n">demographic_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:]</span>
+<span class="n">data_ngbhd</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Characteristic&#39;</span><span class="p">:</span><span class="s1">&#39;Neighbourhood&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">data_ngbhd</span><span class="p">[</span><span class="s1">&#39;id_new&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">141</span><span class="p">,</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">data_ngbhd</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>4</th>
+      <th>Neighbourhood</th>
+      <th>Population, 2016</th>
+      <th>Youth (15-24 years)</th>
+      <th>Total income: Average amount ($)</th>
+      <th>Unemployment rate</th>
+      <th>Unemployment rate (Males)</th>
+      <th>Working Age (25-54 years)</th>
+      <th>id_new</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Agincourt North</td>
+      <td>29,113</td>
+      <td>3,705</td>
+      <td>30,414</td>
+      <td>9.8</td>
+      <td>9</td>
+      <td>11,305</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Agincourt South-Malvern West</td>
+      <td>23,757</td>
+      <td>3,360</td>
+      <td>31,825</td>
+      <td>9.8</td>
+      <td>8.8</td>
+      <td>9,965</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Alderwood</td>
+      <td>12,054</td>
+      <td>1,235</td>
+      <td>47,709</td>
+      <td>6.1</td>
+      <td>5.4</td>
+      <td>5,220</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Annex</td>
+      <td>30,526</td>
+      <td>3,750</td>
+      <td>112,766</td>
+      <td>6.7</td>
+      <td>6.9</td>
+      <td>15,040</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Banbury-Don Mills</td>
+      <td>27,695</td>
+      <td>2,730</td>
+      <td>67,757</td>
+      <td>7.2</td>
+      <td>6.4</td>
+      <td>10,810</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data_ngbhd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from geopy.geocoders import Nominatim</span>
+<span class="c1"># geolocator = Nominatim(user_agent=&quot;olabanji_app&quot;)</span>
+
+<span class="c1"># lat = []</span>
+<span class="c1"># long = []</span>
+
+<span class="c1"># for id, col in data_ngbhd.iterrows():</span>
+<span class="c1">#     location = geolocator.geocode(&#39;Malvern West, Toronto Neighbourhood, Canada&#39;)</span>
+<span class="c1">#     print(location)</span>
+
+<span class="c1"># data_ngbhd[&quot;Latitude&quot;] = lat</span>
+<span class="c1"># data_ngbhd[&quot;Longitude&quot;] = long</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># merge the two data on the new id created</span>
+<span class="n">merge_toronto</span> <span class="o">=</span> <span class="n">toronto</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">data_ngbhd</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id_new&#39;</span><span class="p">)</span>
+<span class="n">merge_toronto</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OBJECTID</th>
+      <th>Neighbourhood_x</th>
+      <th>Total_Area</th>
+      <th>Total_Population</th>
+      <th>Pop_Males</th>
+      <th>Pop_Females</th>
+      <th>Pop0_4years</th>
+      <th>Pop5_9years</th>
+      <th>Pop10_14years</th>
+      <th>Pop15_19years</th>
+      <th>...</th>
+      <th>Language_Urdu</th>
+      <th>geometry</th>
+      <th>id_new</th>
+      <th>Neighbourhood_y</th>
+      <th>Population, 2016</th>
+      <th>Youth (15-24 years)</th>
+      <th>Total income: Average amount ($)</th>
+      <th>Unemployment rate</th>
+      <th>Unemployment rate (Males)</th>
+      <th>Working Age (25-54 years)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>80</td>
+      <td>Agincourt North</td>
+      <td>7.3</td>
+      <td>30280</td>
+      <td>14445</td>
+      <td>15845</td>
+      <td>1320</td>
+      <td>1345</td>
+      <td>1560</td>
+      <td>2000</td>
+      <td>...</td>
+      <td>350</td>
+      <td>POLYGON ((-79.24213 43.80247, -79.24319 43.802...</td>
+      <td>1</td>
+      <td>Agincourt North</td>
+      <td>29,113</td>
+      <td>3,705</td>
+      <td>30,414</td>
+      <td>9.8</td>
+      <td>9</td>
+      <td>11,305</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>81</td>
+      <td>Agincourt South-Malvern West</td>
+      <td>7.9</td>
+      <td>21990</td>
+      <td>10630</td>
+      <td>11350</td>
+      <td>1080</td>
+      <td>930</td>
+      <td>1150</td>
+      <td>1480</td>
+      <td>...</td>
+      <td>395</td>
+      <td>POLYGON ((-79.25498 43.78122, -79.25797 43.780...</td>
+      <td>2</td>
+      <td>Agincourt South-Malvern West</td>
+      <td>23,757</td>
+      <td>3,360</td>
+      <td>31,825</td>
+      <td>9.8</td>
+      <td>8.8</td>
+      <td>9,965</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>87</td>
+      <td>Alderwood</td>
+      <td>5.0</td>
+      <td>11900</td>
+      <td>5765</td>
+      <td>6130</td>
+      <td>610</td>
+      <td>495</td>
+      <td>555</td>
+      <td>650</td>
+      <td>...</td>
+      <td>10</td>
+      <td>POLYGON ((-79.54866 43.59022, -79.54876 43.590...</td>
+      <td>3</td>
+      <td>Alderwood</td>
+      <td>12,054</td>
+      <td>1,235</td>
+      <td>47,709</td>
+      <td>6.1</td>
+      <td>5.4</td>
+      <td>5,220</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>57</td>
+      <td>Annex</td>
+      <td>2.8</td>
+      <td>29180</td>
+      <td>13745</td>
+      <td>15415</td>
+      <td>865</td>
+      <td>695</td>
+      <td>635</td>
+      <td>870</td>
+      <td>...</td>
+      <td>90</td>
+      <td>POLYGON ((-79.39414 43.66872, -79.39588 43.668...</td>
+      <td>4</td>
+      <td>Annex</td>
+      <td>30,526</td>
+      <td>3,750</td>
+      <td>112,766</td>
+      <td>6.7</td>
+      <td>6.9</td>
+      <td>15,040</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>85</td>
+      <td>Banbury-Don Mills</td>
+      <td>10.0</td>
+      <td>26910</td>
+      <td>12485</td>
+      <td>14430</td>
+      <td>1180</td>
+      <td>1205</td>
+      <td>1325</td>
+      <td>1440</td>
+      <td>...</td>
+      <td>220</td>
+      <td>POLYGON ((-79.33055 43.73979, -79.33044 43.739...</td>
+      <td>5</td>
+      <td>Banbury-Don Mills</td>
+      <td>27,695</td>
+      <td>2,730</td>
+      <td>67,757</td>
+      <td>7.2</td>
+      <td>6.4</td>
+      <td>10,810</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 48 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">merge_toronto</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>140
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># drop other unwated data columns</span>
+<span class="n">toronto_nbhd</span> <span class="o">=</span> <span class="n">merge_toronto</span><span class="p">[[</span><span class="s1">&#39;Neighbourhood_x&#39;</span><span class="p">,</span> <span class="s1">&#39;Population, 2016&#39;</span><span class="p">,</span> <span class="s1">&#39;Youth (15-24 years)&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Total income: Average amount ($)&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Unemployment rate&#39;</span><span class="p">,</span><span class="s1">&#39;Unemployment rate (Males)&#39;</span><span class="p">,</span><span class="s1">&#39;Working Age (25-54 years)&#39;</span><span class="p">,</span><span class="s1">&#39;geometry&#39;</span>
+                       <span class="p">]]</span>
+<span class="n">toronto_nbhd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Neighbourhood_x</th>
+      <th>Population, 2016</th>
+      <th>Youth (15-24 years)</th>
+      <th>Total income: Average amount ($)</th>
+      <th>Unemployment rate</th>
+      <th>Unemployment rate (Males)</th>
+      <th>Working Age (25-54 years)</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Agincourt North</td>
+      <td>29,113</td>
+      <td>3,705</td>
+      <td>30,414</td>
+      <td>9.8</td>
+      <td>9</td>
+      <td>11,305</td>
+      <td>POLYGON ((-79.24213 43.80247, -79.24319 43.802...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Agincourt South-Malvern West</td>
+      <td>23,757</td>
+      <td>3,360</td>
+      <td>31,825</td>
+      <td>9.8</td>
+      <td>8.8</td>
+      <td>9,965</td>
+      <td>POLYGON ((-79.25498 43.78122, -79.25797 43.780...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Alderwood</td>
+      <td>12,054</td>
+      <td>1,235</td>
+      <td>47,709</td>
+      <td>6.1</td>
+      <td>5.4</td>
+      <td>5,220</td>
+      <td>POLYGON ((-79.54866 43.59022, -79.54876 43.590...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Annex</td>
+      <td>30,526</td>
+      <td>3,750</td>
+      <td>112,766</td>
+      <td>6.7</td>
+      <td>6.9</td>
+      <td>15,040</td>
+      <td>POLYGON ((-79.39414 43.66872, -79.39588 43.668...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Banbury-Don Mills</td>
+      <td>27,695</td>
+      <td>2,730</td>
+      <td>67,757</td>
+      <td>7.2</td>
+      <td>6.4</td>
+      <td>10,810</td>
+      <td>POLYGON ((-79.33055 43.73979, -79.33044 43.739...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>Wychwood</td>
+      <td>14,349</td>
+      <td>1,320</td>
+      <td>54,460</td>
+      <td>5.2</td>
+      <td>5.7</td>
+      <td>6,420</td>
+      <td>POLYGON ((-79.43592 43.68015, -79.43492 43.680...</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>Yonge-Eglinton</td>
+      <td>11,817</td>
+      <td>1,225</td>
+      <td>89,330</td>
+      <td>6.9</td>
+      <td>5.5</td>
+      <td>5,860</td>
+      <td>POLYGON ((-79.41096 43.70408, -79.40962 43.704...</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>Yonge-St.Clair</td>
+      <td>12,528</td>
+      <td>920</td>
+      <td>114,174</td>
+      <td>5.9</td>
+      <td>5.6</td>
+      <td>5,960</td>
+      <td>POLYGON ((-79.39119 43.68108, -79.39141 43.680...</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>York University Heights</td>
+      <td>27,593</td>
+      <td>4,750</td>
+      <td>29,958</td>
+      <td>10.7</td>
+      <td>9.9</td>
+      <td>12,290</td>
+      <td>POLYGON ((-79.50529 43.75987, -79.50488 43.759...</td>
+    </tr>
+    <tr>
+      <th>139</th>
+      <td>Yorkdale-Glen Park</td>
+      <td>14,804</td>
+      <td>1,870</td>
+      <td>38,527</td>
+      <td>8</td>
+      <td>8.3</td>
+      <td>5,860</td>
+      <td>POLYGON ((-79.43969 43.70561, -79.44011 43.705...</td>
+    </tr>
+  </tbody>
+</table>
+<p>140 rows × 8 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check the columns info</span>
+<span class="n">toronto_nbhd</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;geopandas.geodataframe.GeoDataFrame&#39;&gt;
+Int64Index: 140 entries, 0 to 139
+Data columns (total 8 columns):
+ #   Column                            Non-Null Count  Dtype   
+---  ------                            --------------  -----   
+ 0   Neighbourhood_x                   140 non-null    object  
+ 1   Population, 2016                  140 non-null    object  
+ 2   Youth (15-24 years)               140 non-null    object  
+ 3   Total income: Average amount ($)  140 non-null    object  
+ 4   Unemployment rate                 140 non-null    object  
+ 5   Unemployment rate (Males)         140 non-null    object  
+ 6   Working Age (25-54 years)         140 non-null    object  
+ 7   geometry                          140 non-null    geometry
+dtypes: geometry(1), object(7)
+memory usage: 9.8+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fromat all columns</span>
+<span class="c1">#Remove commas from the some column and convert the number to float</span>
+<span class="c1"># In this example code, we use the str.replace() method to remove commas from the columns</span>
+
+<span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Population, 2016&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Population, 2016&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Youth (15-24 years)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Youth (15-24 years)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Total income: Average amount ($)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Total income: Average amount ($)&#39;</span><span class="p">]</span><span class="o">.</span>\
+<span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Unemployment rate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Unemployment rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Unemployment rate (Males)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Unemployment rate (Males)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Working Age (25-54 years)&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="p">[</span><span class="s1">&#39;Working Age (25-54 years)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create choropleth map showing the distribution of the demographic and socio economic data in Toronto neighborhood</span>
+<span class="c1"># Create the figure and the axes</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># Loop through each year and create a choropleth map in each subplot</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">columns</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;Population, 2016&#39;</span><span class="p">,</span> <span class="s1">&#39;Youth (15-24 years)&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Total income: Average amount ($)&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;Unemployment rate&#39;</span><span class="p">,</span><span class="s1">&#39;Unemployment rate (Males)&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;Working Age (25-54 years)&#39;</span><span class="p">]):</span>
+    <span class="c1"># Calculate the subplot coordinates</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">3</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span>
+
+    <span class="c1"># Create the choropleth map in the subplot</span>
+    <span class="n">toronto_nbhd</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">],</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.8&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;6&#39;</span><span class="p">})</span>
+    
+    
+     <span class="c1"># Add a legend to the subplot</span>
+    <span class="n">cax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.1</span> <span class="o">+</span> <span class="n">col</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span> <span class="o">+</span> <span class="n">row</span> <span class="o">*</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">])</span>
+    <span class="n">sm</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="n">toronto_nbhd</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">vmax</span><span class="o">=</span><span class="n">toronto_nbhd</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">_A</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Add a title to the entire figure</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Toronto Neighbourhoods&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+
+
+
+<span class="c1"># Show the figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ddc5d96217eec4744ba5c1388e0fab3998e61b5086455f475631c9dc2397cde7.png" src="_images/ddc5d96217eec4744ba5c1388e0fab3998e61b5086455f475631c9dc2397cde7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Plot 1</span>
+<span class="n">toronto_nbhd</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.8&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">robbery_gdf2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="c1"># Perform a spatial join between the point and polygon GeoDataFrames</span>
+<span class="n">aggregated</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">sjoin</span><span class="p">(</span><span class="n">robbery_gdf2</span><span class="p">,</span> <span class="n">toronto_nbhd</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">op</span><span class="o">=</span><span class="s2">&quot;within&quot;</span><span class="p">)</span>
+
+<span class="c1"># Calculate the count of points within each polygon</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">aggregated</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Neighbourhood_x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">count_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="n">robbery_count</span> <span class="o">=</span> <span class="n">count_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s1">&#39;robbery count&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+<span class="c1"># Join the count back to the polygon GeoDataFrame</span>
+<span class="n">toronto_nbhd</span> <span class="o">=</span> <span class="n">toronto_nbhd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">robbery_count</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Neighbourhood_x&#39;</span><span class="p">)</span>
+
+<span class="n">toronto_nbhd</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;robbery count&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;OrRd&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.8&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                  <span class="n">legend_kwds</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s2">&quot;Robbery Count&quot;</span><span class="p">,</span> <span class="s1">&#39;orientation&#39;</span><span class="p">:</span> <span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="s1">&#39;pad&#39;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">})</span>
+<span class="c1"># axs[0].axis(&#39;off&#39;)</span>
+<span class="c1"># axs[1].axis(&#39;off&#39;)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Neighborhoods and Reported Robberies&#39;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;6&#39;</span><span class="p">})</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Robbery Count by Neighborhood&#39;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="s1">&#39;fontweight&#39;</span><span class="p">:</span> <span class="s1">&#39;6&#39;</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/954fbb32e4f8923ba77d192944d14fa12cd32058791923514854a6dab791ce18.png" src="_images/954fbb32e4f8923ba77d192944d14fa12cd32058791923514854a6dab791ce18.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">toronto_nbhd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Neighbourhood_x</th>
+      <th>Population, 2016</th>
+      <th>Youth (15-24 years)</th>
+      <th>Total income: Average amount ($)</th>
+      <th>Unemployment rate</th>
+      <th>Unemployment rate (Males)</th>
+      <th>Working Age (25-54 years)</th>
+      <th>geometry</th>
+      <th>robbery count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Agincourt North</td>
+      <td>29113.0</td>
+      <td>3705.0</td>
+      <td>30414.0</td>
+      <td>9.8</td>
+      <td>9.0</td>
+      <td>11305.0</td>
+      <td>POLYGON ((-79.24213 43.80247, -79.24319 43.802...</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Agincourt South-Malvern West</td>
+      <td>23757.0</td>
+      <td>3360.0</td>
+      <td>31825.0</td>
+      <td>9.8</td>
+      <td>8.8</td>
+      <td>9965.0</td>
+      <td>POLYGON ((-79.25498 43.78122, -79.25797 43.780...</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Alderwood</td>
+      <td>12054.0</td>
+      <td>1235.0</td>
+      <td>47709.0</td>
+      <td>6.1</td>
+      <td>5.4</td>
+      <td>5220.0</td>
+      <td>POLYGON ((-79.54866 43.59022, -79.54876 43.590...</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Annex</td>
+      <td>30526.0</td>
+      <td>3750.0</td>
+      <td>112766.0</td>
+      <td>6.7</td>
+      <td>6.9</td>
+      <td>15040.0</td>
+      <td>POLYGON ((-79.39414 43.66872, -79.39588 43.668...</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Banbury-Don Mills</td>
+      <td>27695.0</td>
+      <td>2730.0</td>
+      <td>67757.0</td>
+      <td>7.2</td>
+      <td>6.4</td>
+      <td>10810.0</td>
+      <td>POLYGON ((-79.33055 43.73979, -79.33044 43.739...</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>Wychwood</td>
+      <td>14349.0</td>
+      <td>1320.0</td>
+      <td>54460.0</td>
+      <td>5.2</td>
+      <td>5.7</td>
+      <td>6420.0</td>
+      <td>POLYGON ((-79.43592 43.68015, -79.43492 43.680...</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>Yonge-Eglinton</td>
+      <td>11817.0</td>
+      <td>1225.0</td>
+      <td>89330.0</td>
+      <td>6.9</td>
+      <td>5.5</td>
+      <td>5860.0</td>
+      <td>POLYGON ((-79.41096 43.70408, -79.40962 43.704...</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>Yonge-St.Clair</td>
+      <td>12528.0</td>
+      <td>920.0</td>
+      <td>114174.0</td>
+      <td>5.9</td>
+      <td>5.6</td>
+      <td>5960.0</td>
+      <td>POLYGON ((-79.39119 43.68108, -79.39141 43.680...</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>York University Heights</td>
+      <td>27593.0</td>
+      <td>4750.0</td>
+      <td>29958.0</td>
+      <td>10.7</td>
+      <td>9.9</td>
+      <td>12290.0</td>
+      <td>POLYGON ((-79.50529 43.75987, -79.50488 43.759...</td>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>Yorkdale-Glen Park</td>
+      <td>14804.0</td>
+      <td>1870.0</td>
+      <td>38527.0</td>
+      <td>8.0</td>
+      <td>8.3</td>
+      <td>5860.0</td>
+      <td>POLYGON ((-79.43969 43.70561, -79.44011 43.705...</td>
+      <td>22</td>
+    </tr>
+  </tbody>
+</table>
+<p>139 rows × 9 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">toronto_nbhd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x2409104d160&gt;
+</pre></div>
+</div>
+<img alt="_images/6e3c9eed9dc22595c4db8ed7a39df9b339f91aaa6982bfdba5e7e8ddb307948d.png" src="_images/6e3c9eed9dc22595c4db8ed7a39df9b339f91aaa6982bfdba5e7e8ddb307948d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a scatter plot with a regression line and confidence interval</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Population, 2016&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;robbery count&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">toronto_nbhd</span><span class="p">)</span>
+
+<span class="c1"># Set the axis labels and title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Population, 2016&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Robbery Count&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Population vs Robbery Counts&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/615d7e9325683e3be2efbd313f4014d7b82ad6152c5de72e1bf1a4f82f700ff1.png" src="_images/615d7e9325683e3be2efbd313f4014d7b82ad6152c5de72e1bf1a4f82f700ff1.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h4>Findings<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<p>The provided dataset offers a glimpse into the demographic and economic landscape of six neighborhoods in an unspecified city, and the robbery crime rates of these areas. By analyzing this data, we can gain important insights into the socioeconomic characteristics of each neighborhood, as well as the factors that contribute to the prevalence of robbery crime.</p>
+<p>One important finding is the correlation between high population and high robbery crime rates. The southern part of the Toronto neighborhood, which has the highest population, also has the highest rate of robbery crime. This suggests that robbery crime tends to occur more frequently in areas with a high concentration of people. Additionally, it appears that robbery crimes happen more often in areas with a high number of young people aged 15 to 24. This could be due to the fact that young people are more likely to be out and about in the evenings, and may be perceived as easier targets for criminals.</p>
+<p>On the other hand, the central Toronto neighborhood has the lowest robbery crime rate. This is likely due to the fact that this neighborhood is comprised of people with high average incomes, who can afford security measures like cameras and guards. The data also shows that the unemployment rate is evenly distributed across the neighborhoods, except for central Toronto, where it is significantly lower. This could be a contributing factor to the higher average income rate in that area. The unemployment rate is higher for males than for females, and the neighborhoods with the highest robbery crime rates tend to have a lower unemployment rate, which suggests that medium income earners are more likely to be victims of robbery crime.</p>
+<p>The working age data also shows that people between the ages of 35 and 54 are most likely to live in neighborhoods with high robbery crime rates. This is consistent with the finding that the neighborhoods with the highest crime rates tend to have a higher percentage of low-income earners.</p>
+<p>By comparing the choropleth maps for population, youth, and robbery crime, we can visualize the relationship between these variables in each neighborhood. These insights can help inform policy decisions and resource allocation in order to address socioeconomic disparities and reduce crime rates in these neighborhoods. For instance, neighborhoods with high youth population may benefit from increased lighting and security measures in public spaces. Additionally, areas with high unemployment rates could benefit from targeted job training and employment programs to help reduce poverty and prevent crime. Overall, this data can provide important insights into the factors that contribute to crime rates, and can be used to inform policies and interventions aimed at reducing crime and promoting greater socioeconomic equality.</p>
+</section>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
+<p>Rey, S. J., &amp; Anselin, L. (2021). Point pattern analysis. Geographic Data Science, Chapter 8. Retrieved from <a class="reference external" href="https://geographicdata.science/book/notebooks/08_point_pattern_analysis.html">https://geographicdata.science/book/notebooks/08_point_pattern_analysis.html</a></p>
+<p>Rey, S. J., &amp; Pysal. (n.d.). Centrography. Pysal. Retrieved from <a class="github reference external" href="https://github.com/pysal/pointpats/blob/9a09bd7ff2c3b5402f02a0a54175193cb643edd8/notebooks/centrography.ipynb">pysal/pointpats</a></p>
+<p>Darribas, I. (n.d.). Geovisualization with PySAL. Geographic Data Science, Lab 8. Retrieved from <a class="reference external" href="https://darribas.org/gds_course/content/bH/lab_H.html">https://darribas.org/gds_course/content/bH/lab_H.html</a></p>
+<p>PySAL Developers. (n.d.). Moran’s I visualization. PySAL. Retrieved from <a class="reference external" href="https://pysal.org/notebooks/viz/splot/esda_morans_viz.html">https://pysal.org/notebooks/viz/splot/esda_morans_viz.html</a></p>
+<p>City of Toronto. (2016). Neighbourhood profiles. Open Data Catalogue. Retrieved from <a class="reference external" href="https://open.toronto.ca/dataset/neighbourhood-profiles/">https://open.toronto.ca/dataset/neighbourhood-profiles/</a></p>
+<p>ArcGIS Hub. (n.d.). Toronto neighbourhoods. ArcGIS Online. Retrieved from <a class="reference external" href="https://edu.hub.arcgis.com/datasets/edu::toronto-neighbourhoods-1/explore?location=43.717982%2C-79.377254%2C11.64">https://edu.hub.arcgis.com/datasets/edu::toronto-neighbourhoods-1/explore?location=43.717982%2C-79.377254%2C11.64</a></p>
+<p>City of Toronto. (n.d.). Catalogue. Open Data Catalogue. Retrieved from <a class="reference external" href="https://open.toronto.ca/catalogue/">https://open.toronto.ca/catalogue/</a>
+Toronto Police Service Open Data Portal. (n.d.). Retrieved from <a class="reference external" href="https://data.torontopolice.on.ca/">https://data.torontopolice.on.ca/</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Healthcare-Facility-Accesibility.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Healthcare-Facility-Accesibility</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-a">Part A</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#are-the-crimes-clustered-is-there-central-tendency-create-a-density-map-showing-the-local-density-quadrat-or-kernel-method-may-be-used-and-describe-the-results-100-words">1. Are the crimes clustered? Is there Central Tendency? Create a density map showing the local density (quadrat or kernel method may be used) and describe the results (&lt; 100 words).</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#findings">Findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">——————————————————————————————————————————————————————————————–</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">——————————————————————————————————————————————————————————————–</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-b">Part B</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Findings</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">——————————————————————————————————————————————————————————————–</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Findings</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
