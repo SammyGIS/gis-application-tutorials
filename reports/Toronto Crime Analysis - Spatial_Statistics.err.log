@@ -15,35 +15,36 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# import all the neccessary libary for Data Analysis and Geospatial analysis
-import geopandas as gpd
+# import all required libararies 
+import requests
 import pandas as pd
-import numpy as np
-import os
-import rasterio
+import json
+import geopandas as gpd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import fiona
-from rasterio import mask
-
-
-from arcgis.gis import GIS
-from datetime import datetime as dt
-import matplotlib.pyplot as plt
-
+from shapely.geometry import Point
 import warnings
-warnings.filterwarnings("ignore")
+from pointpats import centrography
+import esda
+import libpysal as lib
+import contextily
+import splot
+from splot.esda import plot_moran
+
+from shapely.geometry import Point
+
+warnings.filterwarnings('ignore')
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
 Cell [1;32mIn[1], line 6[0m
-[0;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m      5[0m [38;5;28;01mimport[39;00m [38;5;21;01mos[39;00m
-[1;32m----> 6[0m [38;5;28;01mimport[39;00m [38;5;21;01mrasterio[39;00m
-[0;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[0;32m      8[0m [38;5;28;01mimport[39;00m [38;5;21;01mseaborn[39;00m [38;5;28;01mas[39;00m [38;5;21;01msns[39;00m
+[0;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mjson[39;00m
+[0;32m      5[0m [38;5;28;01mimport[39;00m [38;5;21;01mgeopandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mgpd[39;00m
+[1;32m----> 6[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[0;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mseaborn[39;00m [38;5;28;01mas[39;00m [38;5;21;01msns[39;00m
+[0;32m      8[0m [38;5;28;01mfrom[39;00m [38;5;21;01mshapely[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgeometry[39;00m [38;5;28;01mimport[39;00m Point
 
-[1;31mModuleNotFoundError[0m: No module named 'rasterio'
+[1;31mModuleNotFoundError[0m: No module named 'matplotlib'
 

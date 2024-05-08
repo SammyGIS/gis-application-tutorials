@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'Healthcare-Facility-Accesibility';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Spatial Statistics: Toronto Crime Analysis" href="Toronto-Crime-Analysis.html" />
     <link rel="prev" title="Welcome to your GIS Tutorial applications" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -434,388 +435,6 @@ document.write(`
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install all the required libraries that are not inbuilt into the ArcGIS notebook</span>
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>geopandas
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>rasterio
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>seaborn
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: geopandas in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (0.14.3)
-Requirement already satisfied: fiona&gt;=1.8.21 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from geopandas) (1.9.6)
-Requirement already satisfied: packaging in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from geopandas) (24.0)
-Requirement already satisfied: pandas&gt;=1.4.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from geopandas) (2.2.2)
-Requirement already satisfied: pyproj&gt;=3.3.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from geopandas) (3.6.1)
-Requirement already satisfied: shapely&gt;=1.8.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from geopandas) (2.0.3)
-Requirement already satisfied: attrs&gt;=19.2.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (23.2.0)
-Requirement already satisfied: certifi in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (2024.2.2)
-Requirement already satisfied: click~=8.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (8.1.7)
-Requirement already satisfied: click-plugins&gt;=1.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (1.1.1)
-Requirement already satisfied: cligj&gt;=0.5 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (0.7.2)
-Requirement already satisfied: six in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (1.16.0)
-Requirement already satisfied: importlib-metadata in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from fiona&gt;=1.8.21-&gt;geopandas) (7.1.0)
-Requirement already satisfied: numpy&gt;=1.22.4 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (1.26.4)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (2.9.0.post0)
-Requirement already satisfied: pytz&gt;=2020.1 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (2024.1)
-Requirement already satisfied: tzdata&gt;=2022.7 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from pandas&gt;=1.4.0-&gt;geopandas) (2024.1)
-Requirement already satisfied: colorama in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from click~=8.0-&gt;fiona&gt;=1.8.21-&gt;geopandas) (0.4.6)
-Requirement already satisfied: zipp&gt;=0.5 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from importlib-metadata-&gt;fiona&gt;=1.8.21-&gt;geopandas) (3.18.1)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 23.3.2 -&gt; 24.0
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>^C
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting rasterio
-  Downloading rasterio-1.3.10-cp39-cp39-win_amd64.whl.metadata (15 kB)
-Collecting affine (from rasterio)
-  Downloading affine-2.4.0-py3-none-any.whl.metadata (4.0 kB)
-Requirement already satisfied: attrs in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (23.2.0)
-Requirement already satisfied: certifi in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (2024.2.2)
-Requirement already satisfied: click&gt;=4.0 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (8.1.7)
-Requirement already satisfied: cligj&gt;=0.5 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (0.7.2)
-Requirement already satisfied: numpy in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (1.26.4)
-Collecting snuggs&gt;=1.4.1 (from rasterio)
-  Downloading snuggs-1.4.7-py3-none-any.whl.metadata (3.4 kB)
-Requirement already satisfied: click-plugins in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (1.1.1)
-Requirement already satisfied: setuptools in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (69.5.1)
-Requirement already satisfied: importlib-metadata in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from rasterio) (7.1.0)
-Requirement already satisfied: colorama in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from click&gt;=4.0-&gt;rasterio) (0.4.6)
-Collecting pyparsing&gt;=2.1.6 (from snuggs&gt;=1.4.1-&gt;rasterio)
-  Downloading pyparsing-3.1.2-py3-none-any.whl.metadata (5.1 kB)
-Requirement already satisfied: zipp&gt;=0.5 in c:\users\hp\appdata\local\pypoetry\cache\virtualenvs\gis-application-tutorials-8mu5kqfj-py3.9\lib\site-packages (from importlib-metadata-&gt;rasterio) (3.18.1)
-Downloading rasterio-1.3.10-cp39-cp39-win_amd64.whl (24.3 MB)
-   ---------------------------------------- 0.0/24.3 MB ? eta -:--:--
-   ---------------------------------------- 0.0/24.3 MB ? eta -:--:--
-   ---------------------------------------- 0.0/24.3 MB 1.4 MB/s eta 0:00:18
-   ---------------------------------------- 0.0/24.3 MB 1.4 MB/s eta 0:00:18
-   ---------------------------------------- 0.0/24.3 MB 1.4 MB/s eta 0:00:18
-   ---------------------------------------- 0.0/24.3 MB 196.9 kB/s eta 0:02:04
-   ---------------------------------------- 0.0/24.3 MB 196.9 kB/s eta 0:02:04
-   ---------------------------------------- 0.1/24.3 MB 286.7 kB/s eta 0:01:25
-   ---------------------------------------- 0.1/24.3 MB 291.5 kB/s eta 0:01:24
-   ---------------------------------------- 0.1/24.3 MB 291.5 kB/s eta 0:01:24
-   ---------------------------------------- 0.1/24.3 MB 273.1 kB/s eta 0:01:29
-   ---------------------------------------- 0.1/24.3 MB 266.9 kB/s eta 0:01:31
-   ---------------------------------------- 0.1/24.3 MB 266.9 kB/s eta 0:01:31
-   ---------------------------------------- 0.2/24.3 MB 289.3 kB/s eta 0:01:24
-   ---------------------------------------- 0.2/24.3 MB 283.5 kB/s eta 0:01:26
-   ---------------------------------------- 0.2/24.3 MB 294.9 kB/s eta 0:01:22
-   ---------------------------------------- 0.2/24.3 MB 294.9 kB/s eta 0:01:22
-   ---------------------------------------- 0.2/24.3 MB 265.1 kB/s eta 0:01:32
-   ---------------------------------------- 0.3/24.3 MB 321.3 kB/s eta 0:01:15
-    --------------------------------------- 0.3/24.3 MB 383.4 kB/s eta 0:01:03
-    --------------------------------------- 0.3/24.3 MB 383.4 kB/s eta 0:01:03
-    --------------------------------------- 0.4/24.3 MB 391.2 kB/s eta 0:01:02
-    --------------------------------------- 0.4/24.3 MB 397.6 kB/s eta 0:01:01
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 454.0 kB/s eta 0:00:53
-    --------------------------------------- 0.5/24.3 MB 199.2 kB/s eta 0:02:00
-    --------------------------------------- 0.5/24.3 MB 201.0 kB/s eta 0:01:59
-    --------------------------------------- 0.5/24.3 MB 202.6 kB/s eta 0:01:58
-    --------------------------------------- 0.6/24.3 MB 223.6 kB/s eta 0:01:47
-   - -------------------------------------- 0.7/24.3 MB 238.7 kB/s eta 0:01:40
-   - -------------------------------------- 0.7/24.3 MB 241.1 kB/s eta 0:01:39
-   - -------------------------------------- 0.7/24.3 MB 252.6 kB/s eta 0:01:34
-   - -------------------------------------- 0.7/24.3 MB 258.5 kB/s eta 0:01:32
-   - -------------------------------------- 0.7/24.3 MB 258.5 kB/s eta 0:01:32
-   - -------------------------------------- 0.8/24.3 MB 261.5 kB/s eta 0:01:31
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   - -------------------------------------- 0.9/24.3 MB 291.7 kB/s eta 0:01:21
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 268.0 kB/s eta 0:01:26
-   -- ------------------------------------- 1.5/24.3 MB 252.9 kB/s eta 0:01:31
-   -- ------------------------------------- 1.5/24.3 MB 252.9 kB/s eta 0:01:31
-   -- ------------------------------------- 1.5/24.3 MB 252.3 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   -- ------------------------------------- 1.6/24.3 MB 252.4 kB/s eta 0:01:31
-   --- ------------------------------------ 1.9/24.3 MB 222.1 kB/s eta 0:01:42
-   --- ------------------------------------ 1.9/24.3 MB 222.1 kB/s eta 0:01:42
-   --- ------------------------------------ 1.9/24.3 MB 223.7 kB/s eta 0:01:41
-   --- ------------------------------------ 1.9/24.3 MB 223.7 kB/s eta 0:01:41
-   --- ------------------------------------ 1.9/24.3 MB 224.0 kB/s eta 0:01:40
-   --- ------------------------------------ 2.0/24.3 MB 227.1 kB/s eta 0:01:39
-   --- ------------------------------------ 2.0/24.3 MB 227.1 kB/s eta 0:01:39
-   --- ------------------------------------ 2.0/24.3 MB 227.1 kB/s eta 0:01:39
-   --- ------------------------------------ 2.0/24.3 MB 227.1 kB/s eta 0:01:39
-   --- ------------------------------------ 2.0/24.3 MB 227.1 kB/s eta 0:01:39
-   --- ------------------------------------ 2.2/24.3 MB 241.8 kB/s eta 0:01:32
-   --- ------------------------------------ 2.3/24.3 MB 249.6 kB/s eta 0:01:29
-   --- ------------------------------------ 2.3/24.3 MB 252.9 kB/s eta 0:01:28
-   --- ------------------------------------ 2.3/24.3 MB 256.5 kB/s eta 0:01:26
-   --- ------------------------------------ 2.3/24.3 MB 256.5 kB/s eta 0:01:26
-   --- ------------------------------------ 2.3/24.3 MB 256.5 kB/s eta 0:01:26
-   --- ------------------------------------ 2.4/24.3 MB 258.6 kB/s eta 0:01:25
-   --- ------------------------------------ 2.4/24.3 MB 258.6 kB/s eta 0:01:25
-   --- ------------------------------------ 2.4/24.3 MB 258.8 kB/s eta 0:01:25
-   --- ------------------------------------ 2.4/24.3 MB 258.8 kB/s eta 0:01:25
-   --- ------------------------------------ 2.4/24.3 MB 258.8 kB/s eta 0:01:25
-   ---- ----------------------------------- 2.4/24.3 MB 257.2 kB/s eta 0:01:26
-   ---- ----------------------------------- 2.5/24.3 MB 258.7 kB/s eta 0:01:25
-   ---- ----------------------------------- 2.5/24.3 MB 258.7 kB/s eta 0:01:25
-   ---- ----------------------------------- 2.5/24.3 MB 260.2 kB/s eta 0:01:24
-   ---- ----------------------------------- 2.5/24.3 MB 260.2 kB/s eta 0:01:24
-   ---- ----------------------------------- 2.5/24.3 MB 260.2 kB/s eta 0:01:24
-   ---- ----------------------------------- 2.5/24.3 MB 260.2 kB/s eta 0:01:24
-   ---- ----------------------------------- 2.5/24.3 MB 260.5 kB/s eta 0:01:24
-   ---- ----------------------------------- 2.6/24.3 MB 266.1 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.6/24.3 MB 266.1 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.6/24.3 MB 265.1 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.7/24.3 MB 266.5 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.7/24.3 MB 266.5 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.7/24.3 MB 266.5 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.7/24.3 MB 267.8 kB/s eta 0:01:21
-   ---- ----------------------------------- 2.7/24.3 MB 268.6 kB/s eta 0:01:21
-   ---- ----------------------------------- 2.7/24.3 MB 268.8 kB/s eta 0:01:21
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 271.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.8/24.3 MB 261.0 kB/s eta 0:01:23
-   ---- ----------------------------------- 2.8/24.3 MB 264.6 kB/s eta 0:01:22
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 269.2 kB/s eta 0:01:20
-   ---- ----------------------------------- 2.9/24.3 MB 227.5 kB/s eta 0:01:35
-   ---- ----------------------------------- 2.9/24.3 MB 227.5 kB/s eta 0:01:35
-   ---- ----------------------------------- 2.9/24.3 MB 227.4 kB/s eta 0:01:35
-   ---- ----------------------------------- 2.9/24.3 MB 227.4 kB/s eta 0:01:35
-   ---- ----------------------------------- 3.0/24.3 MB 226.6 kB/s eta 0:01:35
-   ---- ----------------------------------- 3.0/24.3 MB 226.6 kB/s eta 0:01:35
-   ---- ----------------------------------- 3.0/24.3 MB 227.1 kB/s eta 0:01:35
-   ---- ----------------------------------- 3.0/24.3 MB 227.1 kB/s eta 0:01:35
-   ---- ----------------------------------- 3.0/24.3 MB 226.2 kB/s eta 0:01:35
-   ----- ---------------------------------- 3.1/24.3 MB 233.9 kB/s eta 0:01:31
-   ----- ---------------------------------- 3.1/24.3 MB 236.2 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.2/24.3 MB 235.6 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.2/24.3 MB 235.6 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.2/24.3 MB 235.5 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.2/24.3 MB 235.5 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.2/24.3 MB 235.5 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.2/24.3 MB 234.8 kB/s eta 0:01:31
-   ----- ---------------------------------- 3.2/24.3 MB 233.7 kB/s eta 0:01:31
-   ----- ---------------------------------- 3.2/24.3 MB 234.4 kB/s eta 0:01:31
-   ----- ---------------------------------- 3.2/24.3 MB 233.8 kB/s eta 0:01:31
-   ----- ---------------------------------- 3.3/24.3 MB 235.0 kB/s eta 0:01:30
-   ----- ---------------------------------- 3.3/24.3 MB 237.6 kB/s eta 0:01:29
-   ----- ---------------------------------- 3.4/24.3 MB 240.2 kB/s eta 0:01:28
-   ----- ---------------------------------- 3.4/24.3 MB 243.0 kB/s eta 0:01:27
-   ----- ---------------------------------- 3.4/24.3 MB 243.0 kB/s eta 0:01:27
-   ----- ---------------------------------- 3.5/24.3 MB 243.6 kB/s eta 0:01:26
-   ----- ---------------------------------- 3.5/24.3 MB 247.8 kB/s eta 0:01:24
-   ----- ---------------------------------- 3.6/24.3 MB 250.5 kB/s eta 0:01:23
-   ----- ---------------------------------- 3.6/24.3 MB 251.6 kB/s eta 0:01:23
-   ------ --------------------------------- 3.7/24.3 MB 253.8 kB/s eta 0:01:22
-   ------ --------------------------------- 3.7/24.3 MB 255.1 kB/s eta 0:01:21
-   ------ --------------------------------- 3.8/24.3 MB 258.2 kB/s eta 0:01:20
-   ------ --------------------------------- 3.8/24.3 MB 259.5 kB/s eta 0:01:20
-   ------ --------------------------------- 3.8/24.3 MB 261.6 kB/s eta 0:01:19
-   ------ --------------------------------- 3.9/24.3 MB 263.1 kB/s eta 0:01:18
-   ------ --------------------------------- 3.9/24.3 MB 264.4 kB/s eta 0:01:18
-   ------ --------------------------------- 4.0/24.3 MB 266.7 kB/s eta 0:01:17
-   ------ --------------------------------- 4.0/24.3 MB 267.0 kB/s eta 0:01:17
-   ------ --------------------------------- 4.0/24.3 MB 267.0 kB/s eta 0:01:17
-   ------ --------------------------------- 4.0/24.3 MB 268.7 kB/s eta 0:01:16
-   ------ --------------------------------- 4.1/24.3 MB 270.1 kB/s eta 0:01:16
-   ------ --------------------------------- 4.1/24.3 MB 271.9 kB/s eta 0:01:15
-   ------ --------------------------------- 4.1/24.3 MB 273.1 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------ --------------------------------- 4.1/24.3 MB 273.0 kB/s eta 0:01:14
-   ------- -------------------------------- 4.4/24.3 MB 275.7 kB/s eta 0:01:13
-   ------- -------------------------------- 4.4/24.3 MB 275.7 kB/s eta 0:01:13
-   ------- -------------------------------- 4.4/24.3 MB 275.7 kB/s eta 0:01:13
-   ------- -------------------------------- 4.4/24.3 MB 275.7 kB/s eta 0:01:13
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import all the neccessary libary for Data Analysis and Geospatial analysis</span>
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -834,6 +453,20 @@ Downloading rasterio-1.3.10-cp39-cp39-win_amd64.whl (24.3 MB)
 
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;rasterio&#39;
 </pre></div>
 </div>
 </div>
@@ -3417,6 +3050,15 @@ The best location to site an health center will be the centroid of the low cover
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Welcome to your GIS Tutorial applications</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="Toronto-Crime-Analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Spatial Statistics: Toronto Crime Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
